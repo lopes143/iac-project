@@ -1,6 +1,6 @@
 .data
 # You can change this array to test other values
-array: .word 5, 9, 3, 9, 2   # Initial array values
+array: .word 5, 4, 3, 9, 2   # Initial array values
 
 .text
 
@@ -31,17 +31,30 @@ exit:
 #     this function terminates the program with error code 36
 # =================================================================
 argmax:
-
-
-
-
-
+    li t0,1
+    blt a1,t0,exit_with_error
+    li t0,0
+    lw t2,0(a0) #load first number in the argmax slot
+loop:
+    bge t0,a1,loop_end #loop condition
+    lw t1,0(a0) #load num to analyse
+    ble t1,t2,skip
+    add t2,t1,zero
+    add t3,t0,zero
+skip:
+    addi a0,a0,4
+    addi t0,t0,1
+    j loop
 
 
 
 
 loop_end:
+    add a0,t3,zero
     jr ra                        # Return to the caller
+
+load_error:
+    addi a0,zero,36
 
 # Exits the program with an error 
 # Arguments: 
