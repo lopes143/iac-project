@@ -39,13 +39,13 @@ exit:
 argmax:
     blez a1,exit_with_error
     li t0,0 #t0 is the curent array value's index
-    lw t2,0(a0) #load first number in the argmax slot
+    lw t2,0(a0) #load first number of the array
 loop:
-    bge t0,a1,loop_end  #loop condition - exit it end reached
-    lw t1,0(a0)  #load num to analyse
+    bge t0,a1,loop_end  #loop condition - exit if end reached
+    lw t1,0(a0)  #load num to analyze
     ble t1,t2,skip  #if number is not bigger, skip to next one
-    add t2,t1,zero  #change biggest number till now with current's
-    add t3,t0,zero  #change biggest number's index till now with current's
+    add t2,t1,zero  #change biggest number till now with current one
+    add t3,t0,zero  #change biggest number's index till now with current one
 skip:
     addi a0,a0,4  #step forward 4 bytes (next number)
     addi t0,t0,1
