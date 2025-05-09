@@ -3,7 +3,6 @@
 array: .word -3, 2, -1, 7, -2   # Initial array values				 
 
 .text
-
 main:
   la a0, array      # a0 = pointer to array
   li a1, 5          # a1 = number of elements in the array
@@ -28,9 +27,8 @@ exit:
 #     this function terminates the program with error code 36
 # ============================================================
 relu:
-    li t0,1
-    blt a1,t0,load_error
-    li t0,0 #use array size if needed
+    blez a1,load_error
+    li t0,0
 loop:
     bge t0,a1,loop_end #loop condition
     lw t1,0(a0) #load num to analyse

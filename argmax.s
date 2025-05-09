@@ -30,25 +30,27 @@ exit:
 #   - If the length of the array is less than 1,
 #     this function terminates the program with error code 36
 # =================================================================
+
+# t0: index of current number to analyze
+# t1: current number to analyze
+# t2: biggest number (starts with 1st number)
+# t3: biggest index
+
 argmax:
-    li t0,1
-    blt a1,t0,exit_with_error
-    li t0,0
+    blez a1,exit_with_error
+    li t0,0 #t0 is the curent array value's index
     lw t2,0(a0) #load first number in the argmax slot
 loop:
-    bge t0,a1,loop_end #loop condition
-    lw t1,0(a0) #load num to analyse
-    ble t1,t2,skip
-    add t2,t1,zero
-    add t3,t0,zero
+    bge t0,a1,loop_end  #loop condition - exit it end reached
+    lw t1,0(a0)  #load num to analyse
+    ble t1,t2,skip  #if number is not bigger, skip to next one
+    add t2,t1,zero  #change biggest number till now with current's
+    add t3,t0,zero  #change biggest number's index till now with current's
 skip:
-    addi a0,a0,4
+    addi a0,a0,4  #step forward 4 bytes (next number)
     addi t0,t0,1
     j loop
-
-
-
-
+    
 loop_end:
     add a0,t3,zero
     jr ra                        # Return to the caller
